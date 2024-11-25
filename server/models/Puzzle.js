@@ -3,39 +3,42 @@ const _ = require('underscore');
 
 const setName = (name) => _.escape(name).trim();
 
-const DomoSchema = new mongoose.Schema({
+const PuzzleSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: false,
     trim: true,
     set: setName,
   },
-  age: {
+  id: {
     type: Number,
-    min: 0,
     required: true,
   },
-  owner: {
+  creator: {
     type: mongoose.Schema.ObjectId,
-    required: true,
+    required: false,
     ref: 'Account',
   },
   createdDate: {
     type: Date,
     default: Date.now,
   },
-  score: {
-    type: Number,
-    required: false,
-    min: 0,
+  scores: {
+    type: [mongoose.Schema.ObjectId],
+    required: true,
+    ref: "Score",
   },
+  solution: {
+    type: [Number],
+    required: true,
+  }
 });
 
 DomoSchema.statics.toAPI = (doc) => ({
   name: doc.name,
-  age: doc.age,
+  id: doc.id,
   score: doc.score,
 });
 
-const DomoModel = mongoose.model('Domo', DomoSchema);
-module.exports = DomoModel;
+const PuzzleModel = mongoose.model('Puzzle', PuzzleSchema);
+module.exports = PuzzleModel;
