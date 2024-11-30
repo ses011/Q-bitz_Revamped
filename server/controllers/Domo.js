@@ -1,28 +1,31 @@
 const models = require('../models');
 
-const { Domo } = models;
+const { Puzzle } = models;
 
 // const makerPage = (req, res) => {
 //     res.render('app');
 // }
 const makerPage = async (req, res) => res.render('app');
 
-const makeDomo = async (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'Both name and age are required' });
+const makeNewPuzzle = async (req, res) => {
+  console.log(req);
+  if (!req.body.nums) {
+    return res.status(400).json({ error: 'Nums are required' });
   }
 
-  const domoData = {
-    name: req.body.name,
-    age: req.body.age,
-    owner: req.session.account._id,
-    score: req.body.score,
+  const puzzleData = {
+    solution: req.body.solution,
+    creator: req.session.account._id || 'SERVER',
   };
 
   try {
-    const newDomo = new Domo(domoData);
-    await newDomo.save();
-    return res.status(201).json({ name: newDomo.name, age: newDomo.age, score: newDomo.score });
+    const newPuzzle = new Puzzle(puzzleData);
+    await newPuzzle.save();
+    return res.status(201).json({
+      solution: newPuzzle.solution,
+      creator: newPuzzle.creator,
+      scores: newPuzzle.scores,
+    });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -32,12 +35,12 @@ const makeDomo = async (req, res) => {
   }
 };
 
-const getDomos = async (req, res) => {
+const getPuzzles = async (req, res) => {
   try {
-    const query = { owner: req.session.account._id };
-    const docs = await Domo.find(query).select('name age score').lean().exec();
+    const query = { owner: req.session.account._id || 'SERVER' };
+    const docs = await Puzzle.find(query).select('solution').lean().exec();
 
-    return res.json({ domos: docs });
+    return res.json({ puzzles: docs });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: 'Error retrieving domos' });
@@ -46,6 +49,6 @@ const getDomos = async (req, res) => {
 
 module.exports = {
   makerPage,
-  makeDomo,
-  getDomos,
+  makeNewPuzzle,
+  getPuzzles,
 };
