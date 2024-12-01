@@ -268,3 +268,22 @@ h3.domoAge {
 .domo:last-child {
     margin-bottom:10px;
 }
+
+
+
+
+
+
+.prompt {
+    align-self: center;
+    display: grid;
+    grid-template-columns: repeat(4, 8vh);;
+    grid-template-rows: repeat(4, 8vh);
+    margin-left: 5vw;
+
+    & img {
+        position: relative;
+        width: 8vh;
+        height: 8vh;
+    }
+}

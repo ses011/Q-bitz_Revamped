@@ -2,6 +2,18 @@ const helper = require('./helper');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
+const { object } = require('underscore');
+
+const FACES = Object.freeze({
+    "solidWhite": 0,
+    "solidColor": 1,
+    "whiteCircle": 2,
+    "colorCircle": 3,
+    "colorDiagL": 4,
+    "colorDiagR": 5,
+    "whiteDiagL": 6,
+    "whiteDiagR": 7
+})
 
 const handleNewPuzzle = (e, onPuzzleAdded) => {
     console.log("handle");
@@ -55,9 +67,19 @@ const PuzzleList = (props) => {
     }
 
     const puzzleNodes = puzzles.map(puzzle => {
+        // let card = "";
+        // for (let i = 0; i < 16; i++) {
+        //     let pattern = Object.keys(FACES)[puzzle.solution[i]];
+        //     card += `<img src="${__dirname}/../hosted/img/cardPatterns/${pattern}.png"></img>`
+        // }
         return (
-            <div key={puzzle.id} className='puzzle'>
-                <h3 className='puzzleSolution'>Name: {puzzle.solution}</h3>
+            <div key={puzzle.id} className='prompt'>
+                {puzzle.solution.map ((section) => {
+                    let src = `assets/img/cardPatterns/${Object.keys(FACES)[section]}.png`;
+                    return <img src={src}></img>
+
+                })}
+        
             </div>
         );
     });
