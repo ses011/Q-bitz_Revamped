@@ -3,39 +3,33 @@ const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleDomo = (e, onDomoAdded) => {
+const handleNewPuzzle = (e, onDomoAdded) => {
+    console.log("handle");
     e.preventDefault();
     helper.hideError();
 
-    const name = e.target.querySelector('#domoName').value;
-    const age = e.target.querySelector('#domoAge').value;
-    const score = e.target.querySelector('#domoScore').value;
+    const nums = e.target.querySelector('#nums').value;
 
-    if (!name || !age) {
-        helper.handleError("Name and age are required");
+    if (!nums) {
+        helper.handleError("Name is required");
         return false;
     }
-
-    helper.sendPost(e.target.action, { name, age, score }, onDomoAdded);
+    helper.sendPost(e.target.action, { nums }, onDomoAdded);
     return false;
 }
 
 const DomoForm = (props) => {
     return (
-        <form id="domoForm"
-            onsubmit={(e) => handleDomo(e, props.triggerReload)}
-            name="domoForm"
+        <form id="newPuzzleForm"
+            onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
+            name="newPuzzleForm"
             action="/maker"
             method="POST"
-            className="domoForm"
+            className="newPuzzleForm"
         >
-            <label htmlFor="name">Name: </label>
-            <input id="domoName" type="text" name="name" placeholder="Domo Name" />
-            <label htmlFor="age">Age: </label>
-            <input id="domoAge" type="number" min="0" name="age" />
-            <label htmlFor="score">Score: </label>
-            <input id="domoScore" type="number" min="0" defaultValue="0" name="score" />
-            <input className='makeDomoSubmit' type="submit" value="Make Domo" />
+            <label htmlFor="nums">Numbers: </label>
+            <input id="nums" type="number" />
+            <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
         </form>
     );
 };
@@ -44,12 +38,12 @@ const DomoList = (props) => {
     const [domos, setDomos] = useState(props.domos);
 
     useEffect(() => {
-        const loadDomosFromServer = async () => {
-            const response = await fetch('/getDomos');
-            const data = await response.json();
-            setDomos(data.domos);
-        };
-        loadDomosFromServer();
+        // const loadDomosFromServer = async () => {
+        //     const response = await fetch('/getDomos');
+        //     const data = await response.json();
+        //     setDomos(data.domos);
+        // };
+        // loadDomosFromServer();
     }, [props.reloadDomos]);
 
     if (domos.length === 0) {

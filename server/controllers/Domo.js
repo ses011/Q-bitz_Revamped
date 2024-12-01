@@ -1,51 +1,48 @@
 const models = require('../models');
 
-const { Domo } = models;
+const { Puzzle } = models;
 
 // const makerPage = (req, res) => {
 //     res.render('app');
 // }
 const makerPage = async (req, res) => res.render('app');
 
-const makeDomo = async (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'Both name and age are required' });
+const makePuzzle = async (req, res) => {
+  if (!req.body.nums) {
+    return res.status(400).json({ error: 'nums is required' });
   }
-
-  const domoData = {
-    name: req.body.name,
-    age: req.body.age,
-    owner: req.session.account._id,
-    score: req.body.score,
+  
+  const puzzleData = {
+    solution: req.body.nums.split(""),
   };
 
   try {
-    const newDomo = new Domo(domoData);
-    await newDomo.save();
-    return res.status(201).json({ name: newDomo.name, age: newDomo.age, score: newDomo.score });
+    const newPuzzle = new Puzzle(puzzleData);
+    await newPuzzle.save();
+    return res.status(201).json({ solution: newPuzzle.solution });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
-      return res.status(400).json({ error: 'Domo already exists' });
+      return res.status(400).json({ error: 'puzzle already exists' });
     }
-    return res.status(500).json({ error: 'An error occured making domo' });
+    return res.status(500).json({ error: 'An error occured making puzzle' });
   }
 };
 
-const getDomos = async (req, res) => {
-  try {
-    const query = { owner: req.session.account._id };
-    const docs = await Domo.find(query).select('name age score').lean().exec();
+// const getDomos = async (req, res) => {
+//   try {
+//     const query = { owner: req.session.account._id };
+//     const docs = await Domo.find(query).select('name age score').lean().exec();
 
-    return res.json({ domos: docs });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: 'Error retrieving domos' });
-  }
-};
+//     return res.json({ domos: docs });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).json({ error: 'Error retrieving domos' });
+//   }
+// };
 
 module.exports = {
   makerPage,
-  makeDomo,
-  getDomos,
+  makePuzzle,
+  // getDomos,
 };
