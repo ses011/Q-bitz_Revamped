@@ -3,33 +3,39 @@ const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleNewPuzzle = (e, onPuzzleAdded) => {
+const handleDomo = (e, onDomoAdded) => {
     e.preventDefault();
     helper.hideError();
 
-    const nums = e.target.querySelector('#nums').value;
+    const name = e.target.querySelector('#domoName').value;
+    const age = e.target.querySelector('#domoAge').value;
+    const score = e.target.querySelector('#domoScore').value;
 
-    if (!nums) {
-        helper.handleError("Nums are required!!!");
+    if (!name || !age) {
+        helper.handleError("Name and age are required");
         return false;
     }
 
-    helper.sendPost(e.target.action, { nums }, onPuzzleAdded);
+    helper.sendPost(e.target.action, { name, age, score }, onDomoAdded);
     return false;
 }
 
-const NewPuzzleForm = (props) => {
+const DomoForm = (props) => {
     return (
-        <form id="newPuzzleForm"
-            onsubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
-            name="newPuzzleForm"
+        <form id="domoForm"
+            onsubmit={(e) => handleDomo(e, props.triggerReload)}
+            name="domoForm"
             action="/maker"
             method="POST"
-            className="newPuzzleForm"
+            className="domoForm"
         >
-            <label htmlFor="nums">Numbers: </label>
-            <input id="nums" type="number" />
-            <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
+            <label htmlFor="name">Name: </label>
+            <input id="domoName" type="text" name="name" placeholder="Domo Name" />
+            <label htmlFor="age">Age: </label>
+            <input id="domoAge" type="number" min="0" name="age" />
+            <label htmlFor="score">Score: </label>
+            <input id="domoScore" type="number" min="0" defaultValue="0" name="score" />
+            <input className='makeDomoSubmit' type="submit" value="Make Domo" />
         </form>
     );
 };
@@ -44,7 +50,7 @@ const DomoList = (props) => {
             setDomos(data.domos);
         };
         loadDomosFromServer();
-    }, [props.reloadPuzzles]);
+    }, [props.reloadDomos]);
 
     if (domos.length === 0) {
         return (
@@ -73,16 +79,16 @@ const DomoList = (props) => {
 };
 
 const App = () => {
-    const [reloadPuzzles, setReloadPuzzles] = useState(false);
+    const [reloadDomos, setReloadDomos] = useState(false);
 
     return (
         <div>
-            <div id='makePuzzle'>
-                <NewPuzzleForm triggerReload={() => setReloadPuzzles(!reloadPuzzles)} />
+            <div id='makeDomo'>
+                <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
             </div>
-            {/* <div id='domos'>
-                <DomoList domos={[]} reloadPuzzles={reloadPuzzles} />
-            </div> */}
+            <div id='domos'>
+                <DomoList domos={[]} reloadDomos={reloadDomos} />
+            </div>
         </div>
     );
 };

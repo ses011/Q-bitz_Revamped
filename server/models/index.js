@@ -1,3 +1,2 @@
 module.exports.Account = require('./Account.js');
-module.exports.Puzzle = require('./Puzzle.js');
-module.exports.Score = require('./Score.js');
+module.exports.Domo = require('./Domo.js');
