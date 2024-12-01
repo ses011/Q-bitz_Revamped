@@ -47,7 +47,7 @@ nav:nth-child(1) {
     background-color: #66bdff;
 }
 
-.domoForm {
+.newPuzzleForm {
     border: 2px solid #338acc;
     height: 35px;
     width: 700px;
@@ -58,7 +58,7 @@ nav:nth-child(1) {
     border-top-right-radius: 4px;
 }
 
-.domoForm label {
+.newPuzzleForm label {
     display: inline-block;
     width: 75px;
     margin-left: 10px;
@@ -67,16 +67,16 @@ nav:nth-child(1) {
     color: white;
 }
 
-.domoForm input[type=text] {
+.newPuzzleForm input[type=text] {
     float:left;
 }
 
-.domoForm input[type=number] {
+.newPuzzleForm input[type=number] {
     float:left;
     width: 50px;
 }
 
-.makeDomoSubmit {
+.makePuzzleSubmit {
     transition: background-color 0.4s ease;
     display: inline;
     width: 90px;
@@ -86,11 +86,11 @@ nav:nth-child(1) {
     text-decoration: none;
 }
 
-.makeDomoSubmit:link, .makeDomoSubmit:visited, .makeDomoSubmit:hover, .makeDomoSubmit:active {
+.makePuzzleSubmit:link, .makePuzzleSubmit:visited, .makePuzzleSubmit:hover, .makePuzzleSubmit:active {
     color: white;
 }
 
-.makeDomoSubmit:hover {
+.makePuzzleSubmit:hover {
     transition: background-color 0.4s ease;
     background-color: #338acc;
 }

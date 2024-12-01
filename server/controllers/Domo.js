@@ -11,15 +11,16 @@ const makePuzzle = async (req, res) => {
   if (!req.body.nums) {
     return res.status(400).json({ error: 'nums is required' });
   }
-  
+
   const puzzleData = {
-    solution: req.body.nums.split(""),
+    solution: req.body.nums.split(''),
+    creator: req.session.account._id,
   };
 
   try {
     const newPuzzle = new Puzzle(puzzleData);
     await newPuzzle.save();
-    return res.status(201).json({ solution: newPuzzle.solution });
+    return res.status(201).json({ solution: newPuzzle.solution, creator: newPuzzle.creator });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
@@ -29,20 +30,20 @@ const makePuzzle = async (req, res) => {
   }
 };
 
-// const getDomos = async (req, res) => {
-//   try {
-//     const query = { owner: req.session.account._id };
-//     const docs = await Domo.find(query).select('name age score').lean().exec();
+const getPuzzles = async (req, res) => {
+  try {
+    const query = { creator: req.session.account._id };
+    const docs = await Puzzle.find(query).select(' solution ').lean().exec();
 
-//     return res.json({ domos: docs });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json({ error: 'Error retrieving domos' });
-//   }
-// };
+    return res.json({ puzzles: docs });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Error retrieving puzzles' });
+  }
+};
 
 module.exports = {
   makerPage,
   makePuzzle,
-  // getDomos,
+  getPuzzles,
 };

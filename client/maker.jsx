@@ -3,7 +3,7 @@ const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleNewPuzzle = (e, onDomoAdded) => {
+const handleNewPuzzle = (e, onPuzzleAdded) => {
     console.log("handle");
     e.preventDefault();
     helper.hideError();
@@ -14,11 +14,11 @@ const handleNewPuzzle = (e, onDomoAdded) => {
         helper.handleError("Name is required");
         return false;
     }
-    helper.sendPost(e.target.action, { nums }, onDomoAdded);
+    helper.sendPost(e.target.action, { nums }, onPuzzleAdded);
     return false;
 }
 
-const DomoForm = (props) => {
+const PuzzleForm = (props) => {
     return (
         <form id="newPuzzleForm"
             onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
@@ -34,54 +34,51 @@ const DomoForm = (props) => {
     );
 };
 
-const DomoList = (props) => {
-    const [domos, setDomos] = useState(props.domos);
+const PuzzleList = (props) => {
+    const [puzzles, setPuzzles] = useState(props.puzzles);
 
     useEffect(() => {
-        // const loadDomosFromServer = async () => {
-        //     const response = await fetch('/getDomos');
-        //     const data = await response.json();
-        //     setDomos(data.domos);
-        // };
-        // loadDomosFromServer();
-    }, [props.reloadDomos]);
+        const loadPuzzlesFromServer = async () => {
+            const response = await fetch('/getPuzzles');
+            const data = await response.json();
+            setPuzzles(data.puzzles);
+        };
+        loadPuzzlesFromServer();
+    }, [props.reloadPuzzles]);
 
-    if (domos.length === 0) {
+    if (puzzles.length === 0) {
         return (
-            <div className='domoList'>
-                <h3 className='emptyDomo'>No Domos Yet</h3>
+            <div className='puzzleList'>
+                <h3 className='emptyPuzzle'>No Puzzles Yet</h3>
             </div>
         );
     }
 
-    const domoNodes = domos.map(domo => {
+    const puzzleNodes = puzzles.map(puzzle => {
         return (
-            <div key={domo.id} className='domo'>
-                <img src='/assets/img/domoface.jpeg' alt='domo face' className='domoFace' />
-                <h3 className='domoName'>Name: {domo.name}</h3>
-                <h3 className='domoAge'>Age: {domo.age}</h3>
-                <h3 className='domoScore'>Score: {domo.score}</h3>
+            <div key={puzzle.id} className='puzzle'>
+                <h3 className='puzzleSolution'>Name: {puzzle.solution}</h3>
             </div>
         );
     });
 
     return (
-        <div className='domoList'>
-            {domoNodes}
+        <div className='puzzleList'>
+            {puzzleNodes}
         </div>
     );
 };
 
 const App = () => {
-    const [reloadDomos, setReloadDomos] = useState(false);
+    const [reloadPuzzles, setReloadPuzzles] = useState(false);
 
     return (
         <div>
-            <div id='makeDomo'>
-                <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
+            <div id='makePuzzle'>
+                <PuzzleForm triggerReload={() => setReloadPuzzles(!reloadPuzzles)} />
             </div>
-            <div id='domos'>
-                <DomoList domos={[]} reloadDomos={reloadDomos} />
+            <div id='puzzles'>
+                <PuzzleList puzzles={[]} reloadPuzzles={reloadPuzzles} />
             </div>
         </div>
     );
