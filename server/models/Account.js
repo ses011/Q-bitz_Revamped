@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* This file defines our schema and model interface for the account data.
 
    We first import bcrypt and mongoose into the file. bcrypt is an industry
@@ -41,7 +42,7 @@ const AccountSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false,
-  }
+  },
 });
 
 // Converts a doc to something we can store in redis later on.

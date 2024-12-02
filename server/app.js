@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 require('dotenv').config();
 const path = require('path');
 const express = require('express');
