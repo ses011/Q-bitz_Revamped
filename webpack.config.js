@@ -5,6 +5,7 @@ module.exports = {
         maker: './client/maker.jsx',
         login: './client/login.jsx',
         play: './client/play.jsx',
+        profile: './client/profile.jsx'
     },
     module: {
         rules: [

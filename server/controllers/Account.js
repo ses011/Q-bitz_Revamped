@@ -4,6 +4,8 @@ const { Account } = models;
 
 const loginPage = (req, res) => res.render('login');
 
+const profilePage = (req, res) => res.render('profile');
+
 const logout = (req, res) => {
   req.session.destroy();
   return res.redirect('/');
@@ -53,9 +55,38 @@ const signup = async (req, res) => {
   }
 };
 
+const premiumToggle = async (req, res) => {
+  try {
+    const query = { _id: req.session.account._id };
+    const docs = await Account.findOne(query);
+    docs.premiumStatus = !docs.premiumStatus;
+    await docs.save();
+
+    return res.json({ status: docs.premiumStatus });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Error changing account status' });
+  }
+
+}
+
+const getStatus = async (req, res) => {
+  try {
+    const query = { _id: req.session.account._id };
+    const docs = await Account.findOne(query).select(' premiumStatus ');
+
+    return res.json({ status: docs.premiumStatus });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Error retrieving account status' });
+  }
+}
 module.exports = {
   loginPage,
+  profilePage,
   login,
   signup,
   logout,
+  premiumToggle,
+  getStatus,
 };

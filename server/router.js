@@ -8,6 +8,10 @@ const router = (app) => {
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
 
+  app.get('/profile', mid.requiresLogin, controllers.Account.profilePage);
+  app.post('/premiumToggle', mid.requiresLogin, controllers.Account.premiumToggle);
+  app.get('/getStatus', mid.requiresLogin, controllers.Account.getStatus);
+
   app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
 
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
