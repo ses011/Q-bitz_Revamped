@@ -2,7 +2,8 @@ const controllers = require('./controllers');
 const mid = require('./middleware');
 
 const router = (app) => {
-  app.get('/getPuzzles', mid.requiresLogin, controllers.Domo.getPuzzles);
+  app.get('/getAllPuzzles', mid.requiresLogin, controllers.Puzzle.getAllPuzzles);
+  app.get('/getRandomPuzzle', mid.requiresLogin, controllers.Puzzle.getRandomPuzzle);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
@@ -11,8 +12,10 @@ const router = (app) => {
 
   app.get('/logout', mid.requiresLogin, controllers.Account.logout);
 
-  app.get('/maker', mid.requiresLogin, controllers.Domo.makerPage);
-  app.post('/maker', mid.requiresLogin, controllers.Domo.makePuzzle);
+  app.get('/play', mid.requiresLogin, controllers.Puzzle.playerPage);
+
+  app.get('/maker', mid.requiresLogin, controllers.Puzzle.makerPage);
+  app.post('/maker', mid.requiresLogin, controllers.Puzzle.makePuzzle);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };

@@ -280,7 +280,7 @@ h3.domoAge {
     grid-template-columns: repeat(4, 8vh);;
     grid-template-rows: repeat(4, 8vh);
     margin-left: 5vw;
-
+    padding-top: 10px;
     & img {
         position: relative;
         width: 8vh;

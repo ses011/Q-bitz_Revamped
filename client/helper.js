@@ -1,3 +1,14 @@
+const FACES = Object.freeze({
+    "solidWhite": 0,
+    "solidColor": 1,
+    "whiteCircle": 2,
+    "colorCircle": 3,
+    "colorDiagL": 4,
+    "colorDiagR": 5,
+    "whiteDiagL": 6,
+    "whiteDiagR": 7
+})
+
 const handleError = (message) => {
     document.getElementById('errorMessage').textContent = message;
     document.getElementById('domoMessage').classList.remove('hidden');
@@ -35,6 +46,7 @@ const hideError = () => {
 
 module.exports = {
     handleError,
+    FACES,
     sendPost,
     hideError,
 };

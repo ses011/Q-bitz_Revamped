@@ -22,7 +22,7 @@ const login = (req, res) => {
       return res.status(400).json({ error: 'Wrong username or password' });
     }
     req.session.account = Account.toAPI(account);
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/play' });
   });
 };
 
@@ -43,7 +43,7 @@ const signup = async (req, res) => {
     const newAccount = new Account({ username, password: hash });
     await newAccount.save();
     req.session.account = Account.toAPI(newAccount);
-    return res.json({ redirect: '/maker' });
+    return res.json({ redirect: '/play' });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) {
