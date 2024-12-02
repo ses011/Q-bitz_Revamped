@@ -1,2 +1,32 @@
-https://medium.com/@kamiviolet/mongoose-101-how-to-create-an-auto-incremental-field-20356ad204e8
+●What is the intended purpose of your application?
+    Online version of the puzzle game Q-Bitz. I made a simpler version last year in 235, and have since been playing more browser puzzle games for some ideas.
+● What work has been completed for this milestone?
+    Users can create puzzles in number form. All puzzles are an array of 16 numbers, and users can enter numbers and see the finished puzzle. Display of a user's puzzle. Display of a single puzzle (will be the gameplay page). Toggling between premium and regular account.
+● What work is left, and how do you plan to complete it?
+    Gameplay, which is done just needs to be converted, and a timer for the scoring.
+    ○ What does your timeline/roadmap look like to finish on time?
+        Last week I had a large project for another class, but this is the only programing assignment I have left in any class, so I should have a good amount of time to finish what I want to. 
+● How are you using React?
+    Displaying any data from server, or forms
+    ○ What components have you made?
+        puzzle list (adapted from listing domos), profile toggle, premium status display, puzzle prompt display, 
+        ○ What components do you still plan to add?
+            Score lists, update making and playing puzzles 
+● What data are you storing in MongoDB?
+    Account- Username, password, premium status
+    Puzzle- solution (number array), creator (Account)
+    ○ What data do you still need to store?
+        Score- Account, Puzzle, time
+        Score arrays for both Accounts and Puzzles
+● What is your profit model?
+    Premium accounts, premium users can create new puzzles.
+    ○ Have you implemented it yet?
+        ■ If so, how?
+            Partially. Accounts have a status flag that can be toggled, and users can create their own puzzles. The puzzle creation isn't limited to only premium users however.
+● Do you have a plan for going above and beyond? If so, what is it?
+    Nothing specific yet, but there's a good chance something I'm doing counts, and I do want to do something. We'll see.
+● If you used any borrowed code or code fragments, where did you get them from?
+    There's likely borrowed code from some 235 demos, if there isn't yet there definitely will be once I add the gameplay.  
 
+
+Original version from 235: https://people.rit.edu/ses1431/235/project3/
