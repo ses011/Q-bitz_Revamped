@@ -34,27 +34,27 @@ const Status = (props) => {
         const getStatusFromServer = async () => {
             const response = await fetch('/getStatus');
             data = await response.json();
-            setStatus(data);
+            setStatus(data.status);
         };
         getStatusFromServer();
     }, [props.reloadStatus]);
 
-    console.log(`data: ${data}`);
+    console.log(`data: ${status}`);
     return (
-        <h3>Current status: {data}</h3>
+        <h3>Current status: {status.toString()}</h3>
     )
 }
 
 const Profile = () => {
-    const [status, reloadStatus, setReloadStatus] = useState(false);
+    const [reloadStatus, setReloadStatus] = useState(false);
 
     return (
         <div>
             <div id='premiumStatus'>
-                <Status triggerReload={() => setReloadStatus(!reloadStatus)} />
+                <Status status={[]} reloadStatus={reloadStatus} />
             </div>
             <div id='toggleForm'>
-                <PremiumForm status={status} reloadStatus={reloadStatus} />
+                <PremiumForm triggerReload={() => setReloadStatus(!reloadStatus)} />
             </div>
         </div>
     )

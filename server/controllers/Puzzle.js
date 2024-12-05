@@ -10,10 +10,10 @@ const getRandomPuzzle = async (req, res) => {
   try {
     const query = { };
     const docs = await Puzzle.find(query).select(' solution ').lean().exec();
-    
+
     const rand = Math.round(Math.random() * (docs.length - 1));
     const puzzle = docs[rand];
-    
+
     console.log(`random: ${rand}`);
 
     return res.json({ puzzle });

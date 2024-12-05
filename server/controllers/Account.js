@@ -67,8 +67,7 @@ const premiumToggle = async (req, res) => {
     console.log(err);
     return res.status(500).json({ error: 'Error changing account status' });
   }
-
-}
+};
 
 const getStatus = async (req, res) => {
   try {
@@ -80,7 +79,7 @@ const getStatus = async (req, res) => {
     console.log(err);
     return res.status(500).json({ error: 'Error retrieving account status' });
   }
-}
+};
 module.exports = {
   loginPage,
   profilePage,
