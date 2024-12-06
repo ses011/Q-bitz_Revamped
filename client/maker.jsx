@@ -36,57 +36,15 @@ const PuzzleForm = (props) => {
     );
 };
 
-const PuzzleList = (props) => {
-    // const [puzzles, setPuzzles] = useState(props.puzzles);
-
-    // useEffect(() => {
-    //     const loadPuzzlesFromServer = async () => {
-    //         const response = await fetch('/getAllPuzzles');
-    //         const data = await response.json();
-    //         setPuzzles(data.puzzles);
-    //     };
-    //     loadPuzzlesFromServer();
-    // }, [props.reloadPuzzles]);
-
-    // if (puzzles.length === 0) {
-    //     return (
-    //         <div className='puzzleList'>
-    //             <h3 className='emptyPuzzle'>No Puzzles Yet</h3>
-    //         </div>
-    //     );
-    // }
-
-    // const puzzleNodes = puzzles.map(puzzle => {
-    //     return (
-    //         <div key={puzzle.id} className='prompt'>
-    //             {puzzle.solution.map ((section) => {
-    //                 let src = `assets/img/cardPatterns/${Object.keys(helper.FACES)[section]}.png`;
-    //                 return <img src={src}></img>
-
-    //             })}
-        
-    //         </div>
-    //     );
-    // });
-
-    // return (
-    //     <div className='puzzleList'>
-    //         {puzzleNodes}
-    //     </div>
-    // );
-};
-
 const Maker = () => {
     const [reloadPuzzles, setReloadPuzzles] = useState(false);
 
     return (
         <div>
             <div id='makePuzzle'>
-                <PuzzleForm triggerReload={() => setReloadPuzzles(!reloadPuzzles)} />
+                <PuzzleForm />
             </div>
-            <div id='puzzles'>
-                <PuzzleList puzzles={[]} reloadPuzzles={reloadPuzzles} />
-            </div>
+
         </div>
     );
 };
