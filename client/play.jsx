@@ -1,4 +1,5 @@
 const helper = require('./helper');
+const puzzleHelp = require('./puzzleHelper.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
@@ -45,6 +46,7 @@ const Player = () => {
     return (
         <div>
             <PuzzlePrompt puzzle={[]} />
+            <puzzleHelp.Tray tray = {[]}></puzzleHelp.Tray>
         </div>
     );
 };

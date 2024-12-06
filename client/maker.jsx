@@ -1,4 +1,5 @@
 const helper = require('./helper');
+const puzzleHelp = require('./puzzleHelper.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
@@ -20,58 +21,59 @@ const handleNewPuzzle = (e, onPuzzleAdded) => {
 
 const PuzzleForm = (props) => {
     return (
-        <form id="newPuzzleForm"
-            onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
-            name="newPuzzleForm"
-            action="/maker"
-            method="POST"
-            className="newPuzzleForm"
-        >
-            <label htmlFor="nums">Numbers: </label>
-            <input id="nums" type="number" />
-            <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
-        </form>
+        puzzleHelp.Tray()
+        // <form id="newPuzzleForm"
+        //     onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
+        //     name="newPuzzleForm"
+        //     action="/maker"
+        //     method="POST"
+        //     className="newPuzzleForm"
+        // >
+        //     <label htmlFor="nums">Numbers: </label>
+        //     <input id="nums" type="number" />
+        //     <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
+        // </form>
     );
 };
 
 const PuzzleList = (props) => {
-    const [puzzles, setPuzzles] = useState(props.puzzles);
+    // const [puzzles, setPuzzles] = useState(props.puzzles);
 
-    useEffect(() => {
-        const loadPuzzlesFromServer = async () => {
-            const response = await fetch('/getAllPuzzles');
-            const data = await response.json();
-            setPuzzles(data.puzzles);
-        };
-        loadPuzzlesFromServer();
-    }, [props.reloadPuzzles]);
+    // useEffect(() => {
+    //     const loadPuzzlesFromServer = async () => {
+    //         const response = await fetch('/getAllPuzzles');
+    //         const data = await response.json();
+    //         setPuzzles(data.puzzles);
+    //     };
+    //     loadPuzzlesFromServer();
+    // }, [props.reloadPuzzles]);
 
-    if (puzzles.length === 0) {
-        return (
-            <div className='puzzleList'>
-                <h3 className='emptyPuzzle'>No Puzzles Yet</h3>
-            </div>
-        );
-    }
+    // if (puzzles.length === 0) {
+    //     return (
+    //         <div className='puzzleList'>
+    //             <h3 className='emptyPuzzle'>No Puzzles Yet</h3>
+    //         </div>
+    //     );
+    // }
 
-    const puzzleNodes = puzzles.map(puzzle => {
-        return (
-            <div key={puzzle.id} className='prompt'>
-                {puzzle.solution.map ((section) => {
-                    let src = `assets/img/cardPatterns/${Object.keys(helper.FACES)[section]}.png`;
-                    return <img src={src}></img>
+    // const puzzleNodes = puzzles.map(puzzle => {
+    //     return (
+    //         <div key={puzzle.id} className='prompt'>
+    //             {puzzle.solution.map ((section) => {
+    //                 let src = `assets/img/cardPatterns/${Object.keys(helper.FACES)[section]}.png`;
+    //                 return <img src={src}></img>
 
-                })}
+    //             })}
         
-            </div>
-        );
-    });
+    //         </div>
+    //     );
+    // });
 
-    return (
-        <div className='puzzleList'>
-            {puzzleNodes}
-        </div>
-    );
+    // return (
+    //     <div className='puzzleList'>
+    //         {puzzleNodes}
+    //     </div>
+    // );
 };
 
 const Maker = () => {

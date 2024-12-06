@@ -287,3 +287,16 @@ h3.domoAge {
         height: 8vh;
     }
 }
+
+#tray {
+    display: grid;
+    margin: 10px;
+    grid-template-columns: repeat(4, calc(10vh + 5px));
+    grid-template-rows: repeat(4, calc(10vh + 5px));
+    & img {
+        position: relative;
+        border: solid black 5px;
+        width: calc(10vh + 5px);
+        height: calc(10vh + 5px);
+    }
+}
