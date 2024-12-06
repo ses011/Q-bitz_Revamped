@@ -9,42 +9,50 @@ const handleNewPuzzle = (e, onPuzzleAdded) => {
     e.preventDefault();
     helper.hideError();
 
-    const nums = e.target.querySelector('#nums').value;
+    const nums = [];
+    for (let i = 1; i < 5; i++) {
+        for (let j = 1; j < 5; j++) {
+            let spot = document.getElementById(`t${i}${j}`);
 
-    if (!nums) {
-        helper.handleError("Name is required");
-        return false;
+            // TODO: the enum of the dice at spot
+            let val = null;
+
+            if (!val) {
+                helper.handleError("The entire grid must be used");
+                return false;
+            } 
+            nums.push(val);
+        }
     }
+
     helper.sendPost(e.target.action, { nums }, onPuzzleAdded);
     return false;
 }
 
 const PuzzleForm = (props) => {
     return (
-        puzzleHelp.Tray()
-        // <form id="newPuzzleForm"
-        //     onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
-        //     name="newPuzzleForm"
-        //     action="/maker"
-        //     method="POST"
-        //     className="newPuzzleForm"
-        // >
-        //     <label htmlFor="nums">Numbers: </label>
-        //     <input id="nums" type="number" />
-        //     <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
-        // </form>
+        
+        <form id="newPuzzleForm"
+            onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
+            name="newPuzzleForm"
+            action="/maker"
+            method="POST"
+            className="newPuzzleForm"
+        >
+            {puzzleHelp.Tray()}
+            <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
+        </form>
     );
 };
 
 const Maker = () => {
-    const [reloadPuzzles, setReloadPuzzles] = useState(false);
-
     return (
         <div>
             <div id='makePuzzle'>
                 <PuzzleForm />
+                
             </div>
-
+            {puzzleHelp.DiceGrid()}
         </div>
     );
 };
