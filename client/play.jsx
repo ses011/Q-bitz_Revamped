@@ -47,7 +47,7 @@ const Player = () => {
         <div>
             <PuzzlePrompt puzzle={[]} />
             <puzzleHelp.Tray tray = {[]}/>
-            {/* <puzzleHelp.Dice dice={[]}/> */}
+            {puzzleHelp.DiceGrid() }
         </div>
     );
 };

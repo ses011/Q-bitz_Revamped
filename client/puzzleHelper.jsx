@@ -66,7 +66,7 @@ const DiceGrid = (props) => {
         diceDiv.innerHTML += `<img id=${id} className=${tempDice.getFace()} src=${img} alt=${tempDice.getFace()}></img>`;
     }
     
-    for (let img of document.querySelectorAll("div#dice img")) {
+    for (let img of document.querySelectorAll("#dice img")) {
         img.onmousedown = doMouseDown;
         img.ondblclick = swap;
         let vw = window.innerWidth;

@@ -52,14 +52,13 @@ const Maker = () => {
                 <PuzzleForm />
                 
             </div>
-            {puzzleHelp.DiceGrid()}
+            {puzzleHelp.DiceGrid() }
         </div>
     );
 };
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-    puzzleHelp.setPositions();
     root.render(<Maker />);
 };
 
