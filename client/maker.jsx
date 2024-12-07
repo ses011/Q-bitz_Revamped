@@ -59,6 +59,7 @@ const Maker = () => {
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
+    puzzleHelp.setPositions();
     root.render(<Maker />);
 };
 

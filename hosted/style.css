@@ -300,3 +300,13 @@ h3.domoAge {
         height: calc(10vh + 5px);
     }
 }
+
+#dice {
+    cursor: move;
+    
+    & img {
+        width: 10vh;
+        height: 10vh;
+        position: absolute;
+    }
+}
