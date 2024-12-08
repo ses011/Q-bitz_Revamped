@@ -1,4 +1,5 @@
 const helper = require('./helper');
+const dice = require('./dice.jsx')
 const puzzleHelp = require('./puzzleHelper.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
@@ -41,13 +42,11 @@ const PuzzlePrompt = (props) => {
 }
 
 const Player = () => {
-    //const [reloadPuzzles] = useState(false);
-
     return (
         <div>
             <PuzzlePrompt puzzle={[]} />
             <puzzleHelp.Tray tray = {[]}/>
-            {puzzleHelp.DiceGrid() }
+            <dice.DiceGrid dice={[]}/>
         </div>
     );
 };

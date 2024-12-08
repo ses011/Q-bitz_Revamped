@@ -1,4 +1,5 @@
 const helper = require('./helper');
+const diceGrid = require('./diceGrid.jsx');
 const puzzleHelp = require('./puzzleHelper.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
@@ -47,12 +48,11 @@ const PuzzleForm = (props) => {
 
 const Maker = () => {
     return (
-        <div>
+        <div className='content'>
             <div id='makePuzzle'>
                 <PuzzleForm />
-                
             </div>
-            {puzzleHelp.DiceGrid() }
+            <diceGrid.DiceGrid dice={[]} />
         </div>
     );
 };

@@ -91,10 +91,10 @@ const Profile = () => {
     return (
         <div>
             <div id='premiumStatus'>
-                <Status status={[]} reloadStatus={reloadStatus} />
+                <Status status={""} reloadStatus={reloadStatus} />
             </div>
             <div id="puzzleList">
-                <PuzzleList puzzles={[]}/>
+                <PuzzleList puzzles={[]} />
             </div>
             <div id='toggleForm'>
                 <PremiumForm triggerReload={() => setReloadStatus(!reloadStatus)} />
