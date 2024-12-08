@@ -1,9 +1,12 @@
 const helper = require('./helper');
-const dice = require('./dice.jsx')
+const diceGrid = require('./diceGrid.jsx')
 const puzzleHelp = require('./puzzleHelper.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
+const { DndProvider } = require('react-dnd');
+const { HTML5Backend } = require('react-dnd-html5-backend');
+
 
 
 const PuzzlePrompt = (props) => {
@@ -29,24 +32,29 @@ const PuzzlePrompt = (props) => {
     return (
         <div className='puzzle'>
             <div key={puzzle.id} className='prompt'>
-                {puzzle.solution.map ((section) => {
+                {puzzle.solution.map((section) => {
                     let src = `assets/img/cardPatterns/${Object.keys(helper.FACES)[section]}.png`;
                     return <img src={src}></img>
 
                 })}
-        
+
             </div>
-    
+
         </div>
     );
 }
 
 const Player = () => {
     return (
-        <div>
-            <PuzzlePrompt puzzle={[]} />
-            <puzzleHelp.Tray tray = {[]}/>
-            <dice.DiceGrid dice={[]}/>
+        <div id="content">
+            <div id="puzzle">
+                <PuzzlePrompt puzzle={[]} />
+                <puzzleHelp.Tray tray={[]} />
+            </div>
+
+            <div id="diceGrid">
+            <DndProvider backend={HTML5Backend}><diceGrid.DiceGrid dice={[]} /></DndProvider> 
+            </div>
         </div>
     );
 };

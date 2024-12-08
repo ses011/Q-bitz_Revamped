@@ -9,6 +9,10 @@ const FACES = Object.freeze({
     "whiteDiagR": 7
 })
 
+const ItemTypes = {
+    DICE: 'dice'
+}
+
 const handleError = (message) => {
     document.getElementById('errorMessage').textContent = message;
     document.getElementById('domoMessage').classList.remove('hidden');
@@ -47,6 +51,7 @@ const hideError = () => {
 module.exports = {
     handleError,
     FACES,
+    ItemTypes,
     sendPost,
     hideError,
 };

@@ -1,7 +1,7 @@
 const helper = require('./helper');
 const Dice = require('./dice.jsx');
 const React = require("react");
-const { useState, useEffect, PureComponent} = React;
+const { useState, useEffect, PureComponent } = React;
 
 const roll = () => {
     const val = Math.floor(Math.random() * 8);
@@ -9,7 +9,7 @@ const roll = () => {
 }
 
 const DiceGrid = (props) => {
-    const [dice, setDice] = useState(props.dice); 
+    const [dice, setDice] = useState(props.dice);
 
     useEffect(() => {
         let ids = [];
@@ -20,16 +20,22 @@ const DiceGrid = (props) => {
         const generateDice = ids.map((id) => {
             let face = roll();
             console.log(`face: ${face}`);
-            return <div className='dice'><Dice.Dice id={id} face={face}/></div>;
-        })    
+            return <div className='dice'><Dice.Dice id={id} face={face} /></div>;
+
+        })
         setDice(generateDice);
         console.log(`Dice: ${dice}`);
 
     }, [false])
-    
 
 
-    return (<div id="diceGrid">{dice}</div>);
+
+    return (
+        <div id="diceGrid">
+            {dice}
+            
+        </div>
+    );
 }
 
 module.exports = {

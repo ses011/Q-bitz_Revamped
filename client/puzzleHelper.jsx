@@ -29,12 +29,11 @@ const swap = (e) => {
 }
 
 const Tray = (props) => {
-    let src = "assets/img/transparent.png";
 
     const imgs = indexes.map(index => {
         let id = `t${index}`;
         console.log(`${id}\n`);
-        return <img src={src} id={id} alt=""></img>;
+        return <div id={id}></div>;
 
     })
 
