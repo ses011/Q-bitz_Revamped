@@ -1,6 +1,6 @@
 const helper = require('./helper');
 const diceGrid = require('./diceGrid.jsx');
-const puzzleHelp = require('./puzzleHelper.jsx');
+const puzzleHelp = require('./Tray.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');

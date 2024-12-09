@@ -9,8 +9,6 @@ const roll = () => {
 }
 
 const DiceGrid = (props) => {
-    const [dice, setDice] = useState(props.dice);
-
     useEffect(() => {
         let ids = [];
         for (let id = 0; id < 16; id++) {
@@ -20,24 +18,24 @@ const DiceGrid = (props) => {
         const generateDice = ids.map((id) => {
             let face = roll();
             console.log(`face: ${face}`);
-            return <div className='dice'><Dice.Dice id={id} face={face} /></div>;
+            return <div className='dice' id={`d${id}`}><Dice.Dice id={`${id}`} face={face} /></div>;
 
         })
-        setDice(generateDice);
-        console.log(`Dice: ${dice}`);
+        props.setDice(generateDice);
+        console.log(`Dice: ${props.dice}`);
 
     }, [false])
 
-
+    
 
     return (
         <div id="diceGrid">
-            {dice}
+            {props.dice}
             
         </div>
     );
 }
 
 module.exports = {
-    DiceGrid
+    DiceGrid,
 }

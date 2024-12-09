@@ -8,14 +8,16 @@ const Dice = (props) => {
     const [face] = useState(props.face);
     const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
         type: helper.ItemTypes.DICE,
+        item: {id: id, face: face},
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging()
-        })
+        }),
+        // end: (item) => {
+            
+        // }
     }));
 
-    let img = `assets/img/dicePatterns/${face}.png`;
-
-    let die = <img id={id} className={face} src={img} alt={face}></img>;
+    let die = <img className={face} src={`assets/img/dicePatterns/${face}.png`} alt={face}></img>;
     
     return (
         <div ref={drag}>

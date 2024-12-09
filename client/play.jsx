@@ -1,6 +1,5 @@
 const helper = require('./helper');
-const diceGrid = require('./diceGrid.jsx')
-const puzzleHelp = require('./puzzleHelper.jsx');
+const Puzzle = require('./puzzle.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
@@ -47,14 +46,11 @@ const PuzzlePrompt = (props) => {
 const Player = () => {
     return (
         <div id="content">
-            <div id="puzzle">
+            <div id="prompt">
                 <PuzzlePrompt puzzle={[]} />
-                <puzzleHelp.Tray tray={[]} />
-            </div>
-
-            <div id="diceGrid">
-            <DndProvider backend={HTML5Backend}><diceGrid.DiceGrid dice={[]} /></DndProvider> 
-            </div>
+                
+            </div>            
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} /></DndProvider> 
         </div>
     );
 };
@@ -64,4 +60,4 @@ const init = () => {
     root.render(<Player />);
 };
 
-window.onload = init;
+window.onload = init; 
