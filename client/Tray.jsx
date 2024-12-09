@@ -74,6 +74,7 @@ const Tray = (props) => {
 
     // needs to know what each tray square is holding 
     // and dice ID
+    
     const imgs = indexes.map(i => {
         let index = `t${i}`;
         console.log(`${index}\n`);
