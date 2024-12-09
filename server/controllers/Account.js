@@ -55,6 +55,32 @@ const signup = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  const currentPass = `${req.body.current}`;
+  const newPass = `${req.body.pass}`;
+  const newPass2 = `${req.body.pass2}`;
+
+  if (!username || !pass || !pass2) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+  if (pass !== pass2) {
+    return res.status(400).json({ error: 'Passwords do not match' });
+  }
+
+  try {
+    const currentHash = await Account.generateHash(newPass);
+    if (req.session.account.password === currentHash) {
+      const newHash = await Account.generateHash(newPass);
+      req.session.account.password = newHash;
+      return res.json({ redirect: '/profile' });
+    }
+  }
+  catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'An error occured'});
+  }
+}
+
 const premiumToggle = async (req, res) => {
   try {
     const query = { _id: req.session.account._id };
@@ -86,6 +112,7 @@ module.exports = {
   login,
   signup,
   logout,
+  changePassword,
   premiumToggle,
   getStatus,
 };

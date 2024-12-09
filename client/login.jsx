@@ -40,6 +40,28 @@ const handleSignup = (e) => {
     return false;
 }
 
+const handleChangePass = (e) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const current = e.target.querySelector('#current').value;
+    const pass = e.target.querySelector('#pass').value;
+    const pass2 = e.target.querySelector('#pass2').value;
+
+    if(!current || !pass || !pass2) {
+        helper.handleError("ALL fields are required");
+        return false;
+    }
+
+    if (pass !== pass2) {
+        helper.handleError("Passwords do not match");
+        return false;
+    }
+
+    helper.sendPost(e.target.action, {username, pass, pass2});
+    return false;
+}
+
 const LoginWindow = (props) => {
     return (
         <form id="loginForm"
@@ -77,6 +99,26 @@ const SignupWindow = (props) => {
         </form>
     );
 };
+
+const ChangePass = (props) => {
+    return (
+        <form id="changePassForm"
+            name="changePassForm"
+            onSubmit= {handleChangePass}
+            action="/changePass"
+            method="POST"
+            className="mainForm"
+        >
+            <label htmlFor="current">Username: </label>
+            <input id="current" type="text" name="current" placeholder="current password"/>
+            <label htmlFor="pass">Password: </label>
+            <input id="pass" type="password" name="pass" placeholder="new password"/>
+            <label htmlFor="pass">Password: </label>
+            <input id="pass2" type="password" name="pass2" placeholder="retype new password"/>
+            <input className='formSubmit' type="submit" value="Sign in"/>
+        </form>
+    );
+}
 
 const init = () => {
     const loginButton = document.getElementById('loginButton');
