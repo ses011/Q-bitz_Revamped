@@ -15,7 +15,6 @@ const handleNewPuzzle = (e, holding) => {
     const nums = [];
 
     for (let spot of holding) {
-        console.log(`spotid: ${spot.face}`);
         if (spot.id === false) {
             helper.handleError("The entire grid must be used");
             return false;
@@ -29,15 +28,17 @@ const handleNewPuzzle = (e, holding) => {
 }
 
 const PuzzleForm = (props) => {
-    const setInit = () => {
-        let slots = []
-        for (let i = 0; i < 16; i++) {
-            slots[i] = { id: false, face: "" };
-        }
-        return slots;
-    }
+    const [holding] = useState([]);
 
-    const [holding] = useState(setInit());
+    useEffect(() => {
+        const setInit = () => {
+            for (let i = 0; i < 16; i++) {
+                updateHolding({ id: false, face: "" });
+            }
+        }
+        setInit();
+    }, [false]);
+
 
     const updateHolding = (num, val) => {
         holding[num] = val;
@@ -52,7 +53,7 @@ const PuzzleForm = (props) => {
             method="POST"
             className="newPuzzleForm"
         >
-            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={holding} updateHolding={updateHolding}/></DndProvider>
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={holding} updateHolding={updateHolding} /></DndProvider>
             <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
         </form>
     );

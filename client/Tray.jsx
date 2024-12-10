@@ -34,7 +34,6 @@ const TraySquare = (props) => {
 
     const [, drop] = useDrop(() => ({
         accept: helper.ItemTypes.DICE,
-        canDrop: () => props.holding.id === false,
         drop: (item) => {
             props.updateHolding(props.num, item);
             setHolding(item);
@@ -58,18 +57,6 @@ const TraySquare = (props) => {
 
 
 const Tray = (props) => {
-    const [reloadSquare, setReloadSquare] = useState(false);
-
-    const triggerReload = () => {
-        setReloadSquare(!reloadSquare);
-    }
-
-    const updateHolding = (num, val) => {
-        //props.holding[num] = val;
-        props.updateHolding(num, val);
-        triggerReload();
-    }
-
     let counter = -1;
     const imgs = indexes.map(i => {
         counter++;
@@ -79,9 +66,7 @@ const Tray = (props) => {
             trayIndex={trayIndex}
             holding={props.holding[counter]}
             num={counter}
-            updateHolding={updateHolding}
-            reloadSquare={reloadSquare}
-            triggerReload={triggerReload}
+            updateHolding={props.updateHolding}
         />;
     })
 

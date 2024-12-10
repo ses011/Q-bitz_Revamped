@@ -7,21 +7,38 @@ const { createRoot } = require('react-dom/client');
 const { DndProvider } = require('react-dnd');
 const { HTML5Backend } = require('react-dnd-html5-backend');
 
+const checkAccuracy = (holding, solution) => {
+    console.log(`solution: ${solution}`);
+    for (let i in holding) {
+        if (holding[i].id === false) {
+            console.log(`face: ${holding[i].face}`);
+            return false;
+        }
+        else if (helper.FACES[holding[i].face] !== solution[i]) {
+            console.log(`wrong: ${helper.FACES[holding[i].face]}`);
+            return false;
+        }
+    }
+    return true;
+}
 
+const success = () => {
+    console.log("You won!");
+}
 
 const PuzzlePrompt = (props) => {
-    const [puzzle, setPuzzles] = useState(props.puzzle);
-
     useEffect(() => {
         const loadPuzzleFromServer = async () => {
             const response = await fetch('/getRandomPuzzle');
             const data = await response.json();
-            setPuzzles(data.puzzle);
+            console.log(`new puzzle ${data.puzzle}`);
+            props.setPuzzle(data.puzzle);
+            props.updatePuzzle(data.puzzle);
         };
         loadPuzzleFromServer();
     }, [props.reloadPuzzles]);
 
-    if (puzzle.length === 0) {
+    if (props.puzzle.length === 0) {
         return (
             <div className='prompt'>
                 <h3 className='emptyPuzzle'>Couldn't find a puzzle</h3>
@@ -31,8 +48,8 @@ const PuzzlePrompt = (props) => {
 
     return (
         <div className='puzzle'>
-            <div key={puzzle.id} className='prompt'>
-                {puzzle.solution.map((section) => {
+            <div key={props.puzzle.id} className='prompt'>
+                {props.puzzle.solution.map((section) => {
                     let src = `assets/img/cardPatterns/${Object.keys(helper.FACES)[section]}.png`;
                     return <img src={src}></img>
 
@@ -45,22 +62,48 @@ const PuzzlePrompt = (props) => {
 }
 
 const Player = () => {
+    const [puzzle, setPuzzle] = useState([]);
+    let localPuzzle = puzzle;
+
+    const setInit = () => {
+        let slots = []
+        for (let i = 0; i < 16; i++) {
+            slots[i] = { id: false, face: "" };
+        }
+        return slots;
+    }
+
+    const [holding] = useState(setInit());
     
+    const updatePuzzle = (p) => {
+        localPuzzle = p;
+    }
+
+    const updateHolding = (num, val) => {
+        holding[num] = val;
+        console.log(`puzzle: ${Object.keys(localPuzzle)}`);
+
+        if (checkAccuracy(holding, localPuzzle.solution)) {
+            success();
+        }
+    }
+
+
     return (
         <div id="content">
             <div id="prompt">
-                <PuzzlePrompt puzzle={[]} />
+                <PuzzlePrompt puzzle={puzzle} setPuzzle={setPuzzle} updatePuzzle={updatePuzzle}/>
 
             </div>
-            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={[]} updateHolding={props.updateHolding}/></DndProvider>
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={holding} updateHolding={updateHolding} /></DndProvider>
         </div>
     );
 };
 
 const init = () => {
-    const root = createRoot(document.getElementById('app'));    
+    const root = createRoot(document.getElementById('app'));
 
-    root.render(<Player />);
+        root.render(<Player />);
 };
 
 window.onload = init; 
