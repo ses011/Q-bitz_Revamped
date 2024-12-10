@@ -1,24 +1,24 @@
 const helper = require('./helper');
 const React = require("react");
-const { useState, useEffect} = React;
+const { useState, useEffect } = React;
 const { useDrag } = require('react-dnd');
 
 const Dice = (props) => {
-    const [id] = useState(props.id);
-    const [face] = useState(props.face);
     const [{ isDragging }, drag, dragPreview] = useDrag(() => ({
         type: helper.ItemTypes.DICE,
-        item: {id: id, face: face},
+        item: { face: props.face },
         collect: (monitor) => ({
             isDragging: !!monitor.isDragging()
         }),
-        // end: (item) => {
-            
-        // }
+
     }));
 
-    let die = <img className={face} src={`assets/img/dicePatterns/${face}.png`} alt={face}></img>;
-    
+    let src = "";
+    if (props.face) {
+        src = `assets/img/dicePatterns/${props.face}.png`;
+    }
+    let die = <img  className={props.face} src={src} alt={props.face}></img>;
+
     return (
         <div ref={drag}>
             {die}

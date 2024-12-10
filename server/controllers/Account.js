@@ -60,20 +60,27 @@ const changePassword = async (req, res) => {
   const newPass = `${req.body.pass}`;
   const newPass2 = `${req.body.pass2}`;
 
-  if (!username || !pass || !pass2) {
+  if (!currentPass || !newPass || !newPass2) {
     return res.status(400).json({ error: 'All fields are required' });
   }
-  if (pass !== pass2) {
+  if (newPass !== newPass2) {
     return res.status(400).json({ error: 'Passwords do not match' });
   }
 
   try {
-    const currentHash = await Account.generateHash(newPass);
-    if (req.session.account.password === currentHash) {
-      const newHash = await Account.generateHash(newPass);
-      req.session.account.password = newHash;
-      return res.json({ redirect: '/profile' });
-    }
+    console.log(`curernt: ${req.session.account.password}`);
+    
+    const user = await Account.findOne({_id: req.session.account._id});
+    const hash = await Account.generateHash(newPass);
+
+    return Account.authenticate(user.username, currentPass, (err, account) => {
+      if (err || !account) {
+        return res.status(400).json({ error: 'That isn\'t your password'});
+      }
+      user.password = hash;
+      req.session.account = Account.toAPI(user);
+      return res.json({ redirect: '/profile'});
+    })
   }
   catch (err) {
     console.log(err);

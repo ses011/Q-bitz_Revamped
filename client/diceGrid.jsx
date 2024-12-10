@@ -10,15 +10,9 @@ const roll = () => {
 
 const DiceGrid = (props) => {
     useEffect(() => {
-        let ids = [];
-        for (let id = 0; id < 16; id++) {
-            ids.push(id);
-        }
-
-        const generateDice = ids.map((id) => {
-            let face = roll();
-            console.log(`face: ${face}`);
-            return <div className='dice' id={`d${id}`}><Dice.Dice id={`${id}`} face={face} /></div>;
+        const generateDice = Object.keys(helper.FACES).map((face) => {
+            
+            return <div className='dice' ><Dice.Dice face={face} /></div>;
 
         })
         props.setDice(generateDice);

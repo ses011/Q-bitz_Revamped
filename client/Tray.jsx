@@ -6,6 +6,7 @@ const { useDrop } = require("react-dnd");
 
 const indexes = [11, 12, 13, 14, 21, 22, 23, 24, 31, 32, 33, 34, 41, 42, 43, 44];
 
+
 const swap = (e) => {
     e.preventDefault();
 
@@ -28,56 +29,63 @@ const swap = (e) => {
     setFaceImg(e.target);
 }
 
-const canMoveDice = (index) => {
-    let slot = document.querySelector(`#${index}`);
-    return !(slot.innerHTML.includes("Dice"))
-}
-
-
 const TraySquare = (props) => {
-    const [index, setIndex] = useState(props.index);
-    const [holding, setHolding] = useState(props.holding);  // Reference to the Dice component in that spot
-
-    useEffect(() => {
-        console.log(`effect: ${holding}`);
-    });
+    const [holding, setHolding] = useState(props.holding);
 
     const [, drop] = useDrop(() => ({
         accept: helper.ItemTypes.DICE,
-        canDrop: () => canMoveDice(index),
+        canDrop: () => props.holding.id === false,
         drop: (item) => {
+            props.updateHolding(props.num, item);
             setHolding(item);
-            props.remove(item.id);
         }
     }));
 
+    return (
+        <div
+            ref={drop}
+            id={props.trayIndex}
+            className='traySquare'
+            onDoubleClick={(e) => {
+                props.updateHolding(props.num, { id: false, face: "" })
+                setHolding({ id: false, face: "" });
+            }}>
+            <Dice.Dice id={holding.id} face={holding.face} />
+        </div>
+    )
 
-    if (holding && holding != "") {
-        let dice = (
-            <div ref={drop} id={index} className='dice'>
-                <Dice.Dice id={holding.id} face={holding.face}/>
-            </div>
-        );
-
-        //props.add(dice, holding.id);
-        return dice;
-    }
-    else {
-        return (
-            <div ref={drop} id={index}></div>
-        )
-    }
 }
 
-const Tray = (props) => {
-    const [holding] = useState(props.holding);
 
-    // needs to know what each tray square is holding 
-    // and dice ID
+const Tray = (props) => {
+    const [reloadSquare, setReloadSquare] = useState(false);
+
+    const triggerReload = () => {
+        setReloadSquare(!reloadSquare);
+    }
+
+    const updateHolding = (num, val) => {
+        props.holding[num] = val;
+        console.log(val)
+        triggerReload();
+    }
+
+    let counter = -1;
     const imgs = indexes.map(i => {
-        let index = `t${i}`;
-        console.log(`${index}\n`);
-        return <TraySquare index={index} remove={props.remove} add={props.add}/>;
+        counter++;
+        let trayIndex = `t${i}`;
+        console.log(`index ${trayIndex}\n`);
+
+        props.holding[counter] = { id: false };
+
+        return <TraySquare
+            trayIndex={trayIndex}
+            holding={props.holding[counter]}
+            num={counter}
+            updateHolding={updateHolding}
+            reloadSquare={reloadSquare}
+            triggerReload={triggerReload}
+        />;
     })
 
     return (

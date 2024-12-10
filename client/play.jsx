@@ -1,5 +1,6 @@
 const helper = require('./helper');
 const Puzzle = require('./puzzle.jsx');
+const Tray = require('./Tray.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
@@ -48,15 +49,16 @@ const Player = () => {
         <div id="content">
             <div id="prompt">
                 <PuzzlePrompt puzzle={[]} />
-                
-            </div>            
-            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} /></DndProvider> 
+
+            </div>
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} /></DndProvider>
         </div>
     );
 };
 
 const init = () => {
-    const root = createRoot(document.getElementById('app'));
+    const root = createRoot(document.getElementById('app'));    
+
     root.render(<Player />);
 };
 
