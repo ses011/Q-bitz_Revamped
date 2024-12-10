@@ -7,9 +7,9 @@ const { useState, useEffect} = React;
 const Puzzle = (props) => {
     const [dice, setDice] = useState(props.dice);
 
-    
+     
     return (
-        <div>
+        <div id="movingDice">
             <Tray.Tray holding={[]} diceIds={[]}/>
             <DiceGrid.DiceGrid dice={dice} setDice={setDice}/>
         </div>

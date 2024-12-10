@@ -291,7 +291,7 @@ h3.domoAge {
     }
 }
 
-.content {
+#content {
     display: flex;
     grid-template-columns: repeat(2, calc(vw/2));
     position: relative;
@@ -301,19 +301,19 @@ h3.domoAge {
     display: grid;
     grid-template-columns: repeat(4, calc(10vh + 5px));
     grid-template-rows: repeat(4, calc(10vh + 5px));
-    border: 5px solid black;
     > div {
         border: 5px solid black;
     }
 }
 
 #diceGrid {
+    padding-top: 5vh;
     cursor: move;
-    grid-template-columns: repeat(4, calc(10vh + 5px));
-    grid-template-rows: repeat(4, calc(10vh));
+    display: grid;
+    grid-template: auto / auto auto auto auto;
 
-    & img {
-        position: relative;
+    > div {
+        position:relative;
         padding: 10px;
         width: 10vh;
         height: 10vh;
