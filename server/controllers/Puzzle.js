@@ -41,7 +41,7 @@ const makePuzzle = async (req, res) => {
   }
 
   const puzzleData = {
-    solution: req.body.nums.split(''),
+    solution: req.body.nums,
     creator: req.session.account._id,
   };
 

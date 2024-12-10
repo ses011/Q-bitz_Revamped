@@ -65,8 +65,8 @@ const Tray = (props) => {
     }
 
     const updateHolding = (num, val) => {
-        props.holding[num] = val;
-        console.log(val)
+        //props.holding[num] = val;
+        props.updateHolding(num, val);
         triggerReload();
     }
 
@@ -74,9 +74,6 @@ const Tray = (props) => {
     const imgs = indexes.map(i => {
         counter++;
         let trayIndex = `t${i}`;
-        console.log(`index ${trayIndex}\n`);
-
-        props.holding[counter] = { id: false };
 
         return <TraySquare
             trayIndex={trayIndex}

@@ -1,46 +1,58 @@
 const helper = require('./helper');
-const diceGrid = require('./diceGrid.jsx');
-const puzzleHelp = require('./Tray.jsx');
+const Puzzle = require('./puzzle.jsx');
 const React = require("react");
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
+const { DndProvider } = require('react-dnd');
+const { HTML5Backend } = require('react-dnd-html5-backend');
 
-const handleNewPuzzle = (e, onPuzzleAdded) => {
-    console.log("handle");
+
+const handleNewPuzzle = (e, holding) => {
+    console.log(`handle ${holding[0]}`);
     e.preventDefault();
     helper.hideError();
 
     const nums = [];
-    for (let i = 1; i < 5; i++) {
-        for (let j = 1; j < 5; j++) {
-            let spot = document.getElementById(`t${i}${j}`);
 
-            // TODO: the enum of the dice at spot
-            let val = null;
-
-            if (!val) {
-                helper.handleError("The entire grid must be used");
-                return false;
-            } 
-            nums.push(val);
+    for (let spot of holding) {
+        console.log(`spotid: ${spot.face}`);
+        if (spot.id === false) {
+            helper.handleError("The entire grid must be used");
+            return false;
         }
+        nums.push(helper.FACES[spot.face]);
     }
 
-    helper.sendPost(e.target.action, { nums }, onPuzzleAdded);
+    console.log(`nums ${nums}`)
+    if (nums.length == 16) helper.sendPost(e.target.action, { nums });
     return false;
 }
 
 const PuzzleForm = (props) => {
+    const setInit = () => {
+        let slots = []
+        for (let i = 0; i < 16; i++) {
+            slots[i] = { id: false, face: "" };
+        }
+        return slots;
+    }
+
+    const [holding] = useState(setInit());
+
+    const updateHolding = (num, val) => {
+        holding[num] = val;
+    }
+
+
     return (
-        
         <form id="newPuzzleForm"
-            onSubmit={(e) => handleNewPuzzle(e, props.triggerReload)}
+            onSubmit={(e) => handleNewPuzzle(e, holding)}
             name="newPuzzleForm"
             action="/maker"
             method="POST"
             className="newPuzzleForm"
         >
-            {puzzleHelp.Tray()}
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={holding} updateHolding={updateHolding}/></DndProvider>
             <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
         </form>
     );
@@ -52,7 +64,6 @@ const Maker = () => {
             <div id='makePuzzle'>
                 <PuzzleForm />
             </div>
-            <diceGrid.DiceGrid dice={[]} />
         </div>
     );
 };

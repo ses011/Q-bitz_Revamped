@@ -45,13 +45,14 @@ const PuzzlePrompt = (props) => {
 }
 
 const Player = () => {
+    
     return (
         <div id="content">
             <div id="prompt">
                 <PuzzlePrompt puzzle={[]} />
 
             </div>
-            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} /></DndProvider>
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={[]} updateHolding={props.updateHolding}/></DndProvider>
         </div>
     );
 };

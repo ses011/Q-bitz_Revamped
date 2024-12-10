@@ -7,10 +7,13 @@ const { useState, useEffect} = React;
 const Puzzle = (props) => {
     const [dice, setDice] = useState(props.dice);
 
-     
+    const updateHolding = (num, val) => {
+        props.updateHolding(num, val);
+    }
+
     return (
         <div id="movingDice">
-            <Tray.Tray holding={[]} diceIds={[]}/>
+            <Tray.Tray holding={props.holding} updateHolding={updateHolding} />
             <DiceGrid.DiceGrid dice={dice} setDice={setDice}/>
         </div>
     )
