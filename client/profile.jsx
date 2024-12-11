@@ -41,7 +41,7 @@ const Status = (props) => {
 
     console.log(`data: ${status}`);
     return (
-        <h3>Current status: {status.toString()}</h3>
+        <h3>Current Premium status: {status.toString()}</h3>
     )
 }
 
@@ -134,7 +134,7 @@ const ChangePass = (props) => {
             className="mainForm"
         >
             <label htmlFor="current">Username: </label>
-            <input id="current" type="text" name="current" placeholder="current password"/>
+            <input id="current" type="password" name="current" placeholder="current password"/>
             <label htmlFor="pass">Password: </label>
             <input id="pass" type="password" name="pass" placeholder="new password"/>
             <label htmlFor="pass">Password: </label>

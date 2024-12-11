@@ -1,6 +1,5 @@
-/* eslint-disable linebreak-style */
+const {Account} = require('../models');
 const requiresLogin = (req, res, next) => {
-  // eslint-disable-next-line linebreak-style
   if (!req.session.account) {
     return res.redirect('/');
   }
@@ -25,8 +24,10 @@ const bypassSecure = (req, res, next) => {
   next();
 };
 
-const requiresPremium = (req, res, next) => {
-  if (req.session.account.premiumStatus) {
+const requiresPremium = async (req, res, next) => {
+  const query = { _id: req.session.account._id };
+  const docs = await Account.findOne(query);
+  if (docs.premiumStatus) {
     return next();
   }
   return res.redirect('/profile');

@@ -42,7 +42,7 @@ const signup = async (req, res) => {
 
   try {
     const hash = await Account.generateHash(pass);
-    const newAccount = new Account({ username, password: hash });
+    const newAccount = new Account({ username, password: hash, premiumStatus: false });
     await newAccount.save();
     req.session.account = Account.toAPI(newAccount);
     return res.json({ redirect: '/play' });
@@ -68,8 +68,6 @@ const changePassword = async (req, res) => {
   }
 
   try {
-    console.log(`curernt: ${req.session.account.password}`);
-
     const user = await Account.findOne({ _id: req.session.account._id });
     const hash = await Account.generateHash(newPass);
 

@@ -20,8 +20,8 @@ const router = (app) => {
 
   app.get('/play', mid.requiresLogin, controllers.Puzzle.playerPage);
 
-  app.get('/maker', mid.requiresLogin, controllers.Puzzle.makerPage);
-  app.post('/maker', mid.requiresLogin, controllers.Puzzle.makePuzzle);
+  app.get('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makerPage);
+  app.post('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makePuzzle);
 
   app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
