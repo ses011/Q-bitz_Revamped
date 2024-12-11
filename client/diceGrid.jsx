@@ -7,7 +7,7 @@ const DiceGrid = (props) => {
     useEffect(() => {
         const generateDice = Object.keys(helper.FACES).map((face) => {
             
-            return <div className='dice' ><Dice.Dice face={face} /></div>;
+            return <div className='dice' ><Dice.Dice id={false} face={face} /></div>;
 
         })
         props.setDice(generateDice);

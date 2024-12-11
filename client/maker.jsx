@@ -23,25 +23,27 @@ const handleNewPuzzle = (e, holding) => {
     }
 
     console.log(`nums ${nums}`)
-    if (nums.length == 16) helper.sendPost(e.target.action, { nums });
+    if (nums.length == 16) {
+        helper.sendPost(e.target.action, { nums });
+    }
     return false;
 }
 
 const PuzzleForm = (props) => {
-    const [holding] = useState([]);
-
-    useEffect(() => {
-        const setInit = () => {
-            for (let i = 0; i < 16; i++) {
-                updateHolding({ id: false, face: "" });
-            }
+    const setInit = () => {
+        let slots = []
+        for (let i = 0; i < 16; i++) {
+            slots[i] = { id: false, face: "" };
         }
-        setInit();
-    }, [false]);
+        return slots;
+    }
+
+    const [holding] = useState(setInit());
 
 
     const updateHolding = (num, val) => {
         holding[num] = val;
+        console.log(holding);
     }
 
 

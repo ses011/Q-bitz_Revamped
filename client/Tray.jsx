@@ -36,11 +36,11 @@ const TraySquare = (props) => {
 
 const Tray = (props) => {
     let counter = -1;
-    const imgs = indexes.map(i => {
+    const traySquares = indexes.map(i => {
         counter++;
         let trayIndex = `t${i}`;
         console.log(`index: ${trayIndex}`);
-        
+
         return <TraySquare
             trayIndex={trayIndex}
             holding={props.holding[counter]}
@@ -51,7 +51,7 @@ const Tray = (props) => {
 
     return (
         <div id="tray">
-            {imgs}
+            {traySquares}
         </div>
     )
 }
