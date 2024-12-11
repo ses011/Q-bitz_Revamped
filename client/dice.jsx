@@ -17,7 +17,7 @@ const Dice = (props) => {
     if (props.face) {
         src = `assets/img/dicePatterns/${props.face}.png`;
     }
-    let die = <img  className={props.face} src={src} alt={props.face}></img>;
+    let die = <img className={props.face} src={src} alt={props.face} onError={() => this.src = 'assets/img/transparent.png'}></img>;
 
     return (
         <div ref={drag}>

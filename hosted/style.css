@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -11,7 +12,7 @@ html, body {
     height: 40px;
     width: 40;
     padding-top: 5px;
-    float:left;
+    float: left;
     border-radius: 8px;
 }
 
@@ -34,7 +35,11 @@ nav:nth-child(1) {
     float: left;
 }
 
-.navlink a, .navlink a:link, .navlink a:visited, .navlink a:hover, .navlink a:active {
+.navlink a,
+.navlink a:link,
+.navlink a:visited,
+.navlink a:hover,
+.navlink a:active {
     color: white;
     text-decoration: none;
     padding: 5px;
@@ -52,8 +57,8 @@ nav:nth-child(1) {
     border: 2px solid #338acc;
     height: 35px;
     width: 700px;
-    margin-top:0px;
-    padding-top:10px;
+    margin-top: 0px;
+    padding-top: 10px;
     background-color: #55acee;
     border-bottom-right-radius: 4px;
     border-top-right-radius: 4px;
@@ -69,11 +74,11 @@ nav:nth-child(1) {
 }
 
 .newPuzzleForm input[type=text] {
-    float:left;
+    float: left;
 }
 
 .newPuzzleForm input[type=number] {
-    float:left;
+    float: left;
     width: 50px;
 }
 
@@ -87,7 +92,10 @@ nav:nth-child(1) {
     text-decoration: none;
 }
 
-.makePuzzleSubmit:link, .makePuzzleSubmit:visited, .makePuzzleSubmit:hover, .makePuzzleSubmit:active {
+.makePuzzleSubmit:link,
+.makePuzzleSubmit:visited,
+.makePuzzleSubmit:hover,
+.makePuzzleSubmit:active {
     color: white;
 }
 
@@ -132,7 +140,10 @@ nav:nth-child(1) {
     text-decoration: none;
 }
 
-.formSubmit:link, .formSubmit:visited, .formSubmit:hover, .formSubmit:active {
+.formSubmit:link,
+.formSubmit:visited,
+.formSubmit:hover,
+.formSubmit:active {
     color: white;
 }
 
@@ -141,43 +152,24 @@ nav:nth-child(1) {
     background-color: #338acc;
 }
 
-#user, #pass, #pass2 {
+#user,
+#pass,
+#pass2 {
     text-align: center;
     font-size: 1.1em;
     width: 180px;
     border-radius: 6px;
 }
 
-#user:focus, #pass:focus, #pass2:focus {
+#user:focus,
+#pass:focus,
+#pass2:focus {
     outline: none;
     box-shadow: 0px 0px 1px 1px #55acee;
 }
 
 .hidden {
     display: none;
-}
-
-#domoMessage {
-    top: 250px;
-    width: 250px;
-    height: 650px;
-    position: absolute;
-    z-index: 200;
-    right: 0px;
-    overflow: hidden;
-}
-
-#domoMessage h3 {
-    width: 200px;
-    position: absolute;
-    top: 0px;
-    left: 20px;
-}
-
-#speech {
-    height: 120px;
-    width: 250px;
-    z-index:300;
 }
 
 #errorMessage {
@@ -187,88 +179,6 @@ nav:nth-child(1) {
     font-style: italic;
 }
 
-#domo {
-    z-index: 225;
-    margin-top: -20px;
-    margin-left: 135px;
-    height: 450px;
-    width: 300px;
-    -ms-transform: rotate(330deg);
-    -webkit-transform: rotate(330deg); 
-    transform: rotate(330deg);
-}
-
-#domos {
-    width: 40%;
-    min-width: 400px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    margin: 0 auto;
-    margin-top: 100px;
-}
-
-.domo {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    border: 2px solid #55acee;
-    border-radius: 4px;
-    background-color: #55acee;
-    padding: 10px;
-    min-height:60px;
-    overflow: hidden;
-}
-
-.domo:hover {
-    transition: border-color 0.2s ease-out;
-    border-color: rgba(255,255,255, 0.8);
-    transition: background-color 2.6s ease-out;
-    background-color: #66bfff;
-}
-
-img.domoFace {
-    margin-left: 25px;
-    margin-right: 10px;
-    height: 50px;
-    width: 50px;
-    border-radius: 4px;
-    margin-top:10px;
-    float:left;
-}
-
-h3.emptyDomo {
-    width: 400px;
-    font-size: 1.5em;
-    margin: 0 auto;
-    text-align: center;
-    margin-top: 18px;
-}
-
-h3.domoName {
-    float:left;
-    width: 200px;
-    font-weight: bold;
-    padding-left: 65px;
-    font-size: 1.5em;
-}
-
-h3.domoAge {
-    float:right;
-    text-align: left;
-    width: 100px;
-    font-weight: bold;
-    padding-right: 40px;
-    font-size: 1.5em;
-}
-
-.domo:first-child {
-    margin-top: 10px;
-}
-
-.domo:last-child {
-    margin-bottom:10px;
-}
 
 
 
@@ -281,9 +191,11 @@ h3.domoAge {
 .prompt {
     align-self: center;
     display: grid;
-    grid-template-columns: repeat(4, 8vh);;
+    grid-template-columns: repeat(4, 8vh);
+    ;
     grid-template-rows: repeat(4, 8vh);
     padding: 10px;
+
     & img {
         position: relative;
         width: 8vh;
@@ -301,8 +213,15 @@ h3.domoAge {
     display: grid;
     grid-template-columns: repeat(4, calc(10vh + 5px));
     grid-template-rows: repeat(4, calc(10vh + 5px));
-    > div {
+
+    & .traySquare {
         border: 5px solid black;
+
+        & img {
+            position: relative;
+            width: 10vh;
+            height: 10vh;
+        }
     }
 }
 
@@ -313,10 +232,10 @@ h3.domoAge {
     grid-template: auto / auto auto auto auto;
 
     & img {
-        position:relative;
+        position: relative;
         padding: 10px;
         width: 10vh;
         height: 10vh;
-        
+
     }
 }
