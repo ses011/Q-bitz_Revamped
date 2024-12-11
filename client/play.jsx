@@ -81,7 +81,6 @@ const Player = () => {
 
     const updateHolding = (num, val) => {
         holding[num] = val;
-        console.log(`puzzle: ${Object.keys(localPuzzle)}`);
 
         if (checkAccuracy(holding, localPuzzle.solution)) {
             success();

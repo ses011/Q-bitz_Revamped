@@ -53,7 +53,7 @@ const PuzzleForm = (props) => {
             method="POST"
             className="newPuzzleForm"
         >
-            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle dice={[]} holding={holding} updateHolding={updateHolding} /></DndProvider>
+            <DndProvider backend={HTML5Backend}><Puzzle.Puzzle holding={holding} updateHolding={updateHolding} /></DndProvider>
             <input className='newPuzzleSubmit' type="submit" value="New Puzzle" />
         </form>
     );
