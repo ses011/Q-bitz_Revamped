@@ -23,7 +23,7 @@ const router = (app) => {
   app.get('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makerPage);
   app.post('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makePuzzle);
 
-  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+  app.get('/*', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
 };
 
 module.exports = router;

@@ -1,32 +1,91 @@
 ●What is the intended purpose of your application?
     Online version of the puzzle game Q-Bitz. I made a simpler version last year in 235, and have since been playing more browser puzzle games for some ideas.
-● What work has been completed for this milestone?
-    Users can create puzzles in number form. All puzzles are an array of 16 numbers, and users can enter numbers and see the finished puzzle. Display of a user's puzzle. Display of a single puzzle (will be the gameplay page). Toggling between premium and regular account.
-● What work is left, and how do you plan to complete it?
-    Gameplay, which is done just needs to be converted, and a timer for the scoring.
-    ○ What does your timeline/roadmap look like to finish on time?
-        Last week I had a large project for another class, but this is the only programing assignment I have left in any class, so I should have a good amount of time to finish what I want to. 
+
 ● How are you using React?
-    Displaying any data from server, or forms
     ○ What components have you made?
-        puzzle list (adapted from listing domos), profile toggle, premium status display, puzzle prompt display, 
-        ○ What components do you still plan to add?
-            Score lists, update making and playing puzzles 
+        There's lots of nested components, so I'll try to explain them as they're arranged
+        
+        -Maker, parent component for /maker page
+            -PuzzleForm, form to send post request to add new puzzle to database
+                -Puzzle, Parent component to transfer data between ->
+                    -Tray, 4x4 grid with open slots for dropping dice
+                        -TraySquare, one spot with a reference to what pattern is there
+                    -DiceGrid, the array of 8 patterns possible to use
+                        -Dice, one dice
+
+        -Player, parent component for /play page
+            -PuzzlePrompt, the black and white image to match
+            -Puzzle, same as above
+
+        -Profile, Parent component for /profile page
+            -PremiumForm, button to toggle premium status
+            -Status, displays current premium status
+            -ChangePass, form to change password
+
+        (the following are the same from domomaker)
+        -LoginWindow, form to login to an account
+        -SignupWindow, form to signup for an account
+
 ● What data are you storing in MongoDB?
-    Account- Username, password, premium status
-    Puzzle- solution (number array), creator (Account)
-    ○ What data do you still need to store?
-        Score- Account, Puzzle, time
-        Score arrays for both Accounts and Puzzles
-● What is your profit model?
-    Premium accounts, premium users can create new puzzles.
-    ○ Have you implemented it yet?
-        ■ If so, how?
-            Partially. Accounts have a status flag that can be toggled, and users can create their own puzzles. The puzzle creation isn't limited to only premium users however.
-● Do you have a plan for going above and beyond? If so, what is it?
-    Nothing specific yet, but there's a good chance something I'm doing counts, and I do want to do something. We'll see.
+    Account- Username, password, premium status (bool), created date
+    Puzzle- solution (number array), creator (Account), created date
+
+    I have a schema for Score as well, as I had a plan to use that, but I didn't have time to use it (explained more later)
+
+● What went right in the development of this project?
+    - I adapted all of what I had done last year as well as adding the ability to make new puzzles. 
+    - A happy accident lead me to deciding to switch my method of grid-filling from 16 "dice" to keep track of to adding a pattern to a spot.
+
+
+● What went wrong in the development of this project?
+    - Understanding React DnD took way longer than I expected it to.
+    - There's definitely some parts that aren't done to react standards, or states in wrong places, or extra variables, but they worked so I didn't want to question it and moved on. 
+    - I'm not a fan of working with CSS, it's more similar to Domomaker than I would like it to be but I tried to make the colors very different, and the puzzle layout is quite different from anything in domomaker. The navigation layout is more similar than I hoped it'd be though.
+
+● What did you learn while developing this project?
+    -React DnD (drag and drop). It also forced me to actually understand react, which I definitely feel more confident about now than two weeks ago.
+
+● If you were to continue, what would you do to improve your application?
+    -I was hoping to do a score system with a timer and leaderboards, so that'd definitely be the next step. I'd also want to make the style a little better, CSS is my nemesis.
+    - Beyond that, I'd want to do some edge case bug fixing. For example, currently, if you're on the maker page and fill up the grid, remove one, then add the puzzle, it'll accept it as complete. Or a user can get their own puzzle to solve. Little thigns like that.
+
+● If you went above and beyond, how did you do so?
+    - Figuring out React DnD was a much larger undertaking than I expected it to be. My original verson of this game from last year just used x y position tags on all the elements, and I quickly realized I'd have to adapt it for this. I'm glad I quickly found React DnD, but the tutorial on the docs wasn't as in depth as I needed it to be.
+    
 ● If you used any borrowed code or code fragments, where did you get them from?
-    There's likely borrowed code from some 235 demos, if there isn't yet there definitely will be once I add the gameplay.  
+    - Most of the React DnD code I adapted from the following two tutorials. None of it is copy/paste, and my end result is different from them both, but they were both heavily referenced.
+        -https://medium.com/emilyshasha/create-a-puzzle-with-react-dnd-0aaf45c38c24
+        -https://react-dnd.github.io/react-dnd/docs/tutorial
+    
 
 
 Original version from 235: https://people.rit.edu/ses1431/235/project3/
+
+
+
+
+
+ENDPOINTS
+
+'/getAllPuzzles', mid.requiresLogin, controllers.Puzzle.getAllPuzzles;
+  app.get('/getRandomPuzzle', mid.requiresLogin, controllers.Puzzle.getRandomPuzzle);
+
+  app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+  app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
+
+  app.get('/profile', mid.requiresLogin, controllers.Account.profilePage);
+  app.post('/premiumToggle', mid.requiresLogin, controllers.Account.premiumToggle);
+  app.get('/getStatus', mid.requiresLogin, controllers.Account.getStatus);
+
+  app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
+
+  app.post('/changePass', mid.requiresSecure, mid.requiresLogin, controllers.Account.changePassword);
+
+  app.get('/logout', mid.requiresLogin, controllers.Account.logout);
+
+  app.get('/play', mid.requiresLogin, controllers.Puzzle.playerPage);
+
+  app.get('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makerPage);
+  app.post('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makePuzzle);
+
+  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
