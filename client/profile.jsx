@@ -3,11 +3,11 @@ const React = require('react');
 const { useState, useEffect } = React;
 const { createRoot } = require('react-dom/client');
 
-const handleToggle = (e) => {
+const handleToggle = (e, handler) => {
     e.preventDefault();
     helper.hideError();
-
-    helper.sendPost(e.target.action);
+    
+    helper.sendPost(e.target.action, {}, handler);
     return false;
 }
 
@@ -15,7 +15,7 @@ const PremiumForm = (props) => {
     return (
         <form id="premiumForm"
             name="premiumForm"
-            onSubmit={handleToggle}
+            onSubmit={(e) => handleToggle(e, props.triggerReload) }
             action="/premiumToggle"
             method="POST"
             className="mainForm"
@@ -71,9 +71,7 @@ const PuzzleList = (props) => {
                 {puzzle.solution.map ((section) => {
                     let src = `assets/img/cardPatterns/${Object.keys(helper.FACES)[section]}.png`;
                     return <img src={src}></img>
-
                 })}
-        
             </div>
         );
     });
