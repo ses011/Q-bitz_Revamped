@@ -23,7 +23,7 @@ const checkAccuracy = (holding, solution) => {
 }
 
 const success = () => {
-    console.log("You won!");
+    document.querySelector('#successMsg').classList.remove('hidden');
 }
 
 const PuzzlePrompt = (props) => {
@@ -101,8 +101,8 @@ const Player = () => {
 
 const init = () => {
     const root = createRoot(document.getElementById('app'));
-
-        root.render(<Player />);
+    document.querySelector('#successMsg').classList.add('hidden');
+    root.render(<Player />);
 };
 
 window.onload = init; 

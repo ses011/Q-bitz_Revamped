@@ -1,5 +1,5 @@
 ●What is the intended purpose of your application?
-    Online version of the puzzle game Q-Bitz. I made a simpler version last year in 235, and have since been playing more browser puzzle games for some ideas.
+    - Online version of the puzzle game Q-Bitz. I made a simpler version last year in 235, and have since been playing more browser puzzle games for some ideas.
 
 ● How are you using React?
     ○ What components have you made?
@@ -7,7 +7,7 @@
         
         -Maker, parent component for /maker page
             -PuzzleForm, form to send post request to add new puzzle to database
-                -Puzzle, Parent component to transfer data between ->
+                -Puzzle, Parent component to transfer data between Tray and DiceGrid
                     -Tray, 4x4 grid with open slots for dropping dice
                         -TraySquare, one spot with a reference to what pattern is there
                     -DiceGrid, the array of 8 patterns possible to use
@@ -16,6 +16,7 @@
         -Player, parent component for /play page
             -PuzzlePrompt, the black and white image to match
             -Puzzle, same as above
+                -cont.
 
         -Profile, Parent component for /profile page
             -PremiumForm, button to toggle premium status
@@ -33,9 +34,9 @@
     I have a schema for Score as well, as I had a plan to use that, but I didn't have time to use it (explained more later)
 
 ● What went right in the development of this project?
+    - Overall, it works. I hoped to do more, and there were times where I thought I'd end up with less.
     - I adapted all of what I had done last year as well as adding the ability to make new puzzles. 
     - A happy accident lead me to deciding to switch my method of grid-filling from 16 "dice" to keep track of to adding a pattern to a spot.
-
 
 ● What went wrong in the development of this project?
     - Understanding React DnD took way longer than I expected it to.
@@ -47,7 +48,11 @@
 
 ● If you were to continue, what would you do to improve your application?
     -I was hoping to do a score system with a timer and leaderboards, so that'd definitely be the next step. I'd also want to make the style a little better, CSS is my nemesis.
-    - Beyond that, I'd want to do some edge case bug fixing. For example, currently, if you're on the maker page and fill up the grid, remove one, then add the puzzle, it'll accept it as complete. Or a user can get their own puzzle to solve. Little thigns like that.
+    - Beyond that, I'd want to do some edge case bug fixing and details. For example, 
+        * If you're on the maker page and fill up the grid, remove one, then add the puzzle, it'll accept it as complete.
+        * A user can get their own puzzle to solve
+        * Default placeholder image symbol in empty tray spaces.
+    Little details like these that I'd like to fix.
 
 ● If you went above and beyond, how did you do so?
     - Figuring out React DnD was a much larger undertaking than I expected it to be. My original verson of this game from last year just used x y position tags on all the elements, and I quickly realized I'd have to adapt it for this. I'm glad I quickly found React DnD, but the tutorial on the docs wasn't as in depth as I needed it to be.
@@ -56,7 +61,7 @@
     - Most of the React DnD code I adapted from the following two tutorials. None of it is copy/paste, and my end result is different from them both, but they were both heavily referenced.
         -https://medium.com/emilyshasha/create-a-puzzle-with-react-dnd-0aaf45c38c24
         -https://react-dnd.github.io/react-dnd/docs/tutorial
-    
+    - All images were created by me and based off of the table-top game
 
 
 Original version from 235: https://people.rit.edu/ses1431/235/project3/
@@ -67,25 +72,94 @@ Original version from 235: https://people.rit.edu/ses1431/235/project3/
 
 ENDPOINTS
 
-'/getAllPuzzles', mid.requiresLogin, controllers.Puzzle.getAllPuzzles;
-  app.get('/getRandomPuzzle', mid.requiresLogin, controllers.Puzzle.getRandomPuzzle);
+/getAllPuzzles 
+    Supported Methods: GET
+    Middleware: Requires Login
+    Query Params: None
+    Description: Gets all puzzles created by the current user
+    Return Type: JSON
 
-  app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
-  app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);
+/getRandomPuzzle
+    Supported Methods: GET
+    Middleware: Requires Login
+    Query Params: None
+    Description: Gets one random puzzle created by any user
+    Return Type: JSON
 
-  app.get('/profile', mid.requiresLogin, controllers.Account.profilePage);
-  app.post('/premiumToggle', mid.requiresLogin, controllers.Account.premiumToggle);
-  app.get('/getStatus', mid.requiresLogin, controllers.Account.getStatus);
+/login
+    Supported Methods: GET, POST
+    Middleware: Requires Secure, Requires Logout
+    Query Params: 
+        GET- None
+        POST- username, pass
+    Description: 
+        GET- Gets the login page
+        POST- tries to login
+    Return Type: JSON 
 
-  app.post('/signup', mid.requiresSecure, mid.requiresLogout, controllers.Account.signup);
+/profile
+    Supported Methods: GET
+    Middleware: Requires Login
+    Query Params: None
+    Description: Gets the profile page for current user
+    Return Type: JSON
 
-  app.post('/changePass', mid.requiresSecure, mid.requiresLogin, controllers.Account.changePassword);
+/premiumToggle
+    Supported Methods: POST
+    Middleware: Requires Login
+    Query Params: None
+    Description: Toggles the current user's premium status
+    Return Type: JSON
 
-  app.get('/logout', mid.requiresLogin, controllers.Account.logout);
+/getStatus
+    Supported Methods: GET
+    Middleware: Requires Login
+    Query Params: None
+    Description: Gets current user's premium status
+    Return Type: JSON
 
-  app.get('/play', mid.requiresLogin, controllers.Puzzle.playerPage);
+/signup
+    Supported Methods: POST
+    Middleware: Requires Secure, Requires Logout
+    Query Params: username, pass1, pass2
+    Description: tries to create new user account
+    Return Type: JSON 
 
-  app.get('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makerPage);
-  app.post('/maker', mid.requiresLogin, mid.requiresPremium, controllers.Puzzle.makePuzzle);
+/changePass
+    Supported Methods: POST
+    Middleware: Requires Secure, Requires Login
+    Query Params: current, pass1, pass2
+    Description: Allows user to set current password to new password
+    Return Type: JSON
 
-  app.get('/', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
+/logout
+    Supported Methods: GET
+    Middleware: Requires Login
+    Query Params: None
+    Description: Logs out user and redirects to login page
+    Return Type: JSON
+
+/play
+    Supported Methods: GET
+    Middleware: Requires Login
+    Query Params: None
+    Description: Gets play page
+    Return Type: JSON
+
+/maker
+    Supported Methods: GET, POST
+    Middleware: Requires Secure, Requires Logout
+    Query Params: 
+        GET- None
+        POST- solution (array of numbers)
+    Description: 
+        GET- Gets the maker page
+        POST- tries to add a new puzzle to the database
+    Return Type: JSON 
+
+/*
+    Supported Methods: GET
+    Middleware: Requires Secure, Requires Logout
+    Query Params: None
+    Description: Redirects any GET requests not alread handled- redirects to the login page
+    Return Type: JSON

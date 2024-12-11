@@ -1,4 +1,5 @@
-const {Account} = require('../models');
+const { Account } = require('../models');
+
 const requiresLogin = (req, res, next) => {
   if (!req.session.account) {
     return res.redirect('/');
